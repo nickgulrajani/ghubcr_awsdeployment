@@ -4,28 +4,18 @@ on:
   push:
     branches:
       - main
-
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-#      - name: Set up Docker
-#        uses: docker/setup-docker@v1
-	 env:
-          GH_TOKEN:  ${{ secrets.GH_TOKEN }}
-      - name: Build Docker image
-        run: docker build -t ghcr.io/nickgulrajani/ghubcr_awsdeployment:DEV .
-
-      - name: Push Docker image to GitHub registry
-        run: docker push ghcr.io/nickgulrajani/ghubcr_awsdeployment:DEV
-
-      - name: Test Docker image
+      - name: Build and push Docker image
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
-          docker pull ghcr.io/nickgulrajani/ghubcr_awsdeployment:DEV
-          # Add your testing commands here
-          docker run -it --rm  ghcr.io/nickgulrajani/ghubcr_awsdeployment:DEV
+          docker build -t ghcr.io/nickgulrajani/ghubcr_awsdeployment:DEV .
+          docker login ghcr.io -u nickgulrajani -p $GH_TOKEN
+	  run: docker push ghcr.io/nickgulrajani/ghubcr_awsdeployment:DEV
 
