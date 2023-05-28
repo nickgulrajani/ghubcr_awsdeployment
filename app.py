@@ -1,6 +1,6 @@
 import numpy as np
 from sklearn.linear_model import LinearRegression
-
+# Add Save and Load Training Model data 
 # Sample data for sales prediction
 advertising_expenditure = np.array([100, 200, 300, 400, 500]).reshape(-1, 1)  # Independent variable
 sales = np.array([250, 450, 550, 650, 750])  # Dependent variable
