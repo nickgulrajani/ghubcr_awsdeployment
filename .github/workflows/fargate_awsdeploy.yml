@@ -1,4 +1,4 @@
-nname: Test Docker Image
+name: Test Docker Image
 
 on:
   push:
