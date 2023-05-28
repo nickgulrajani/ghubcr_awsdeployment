@@ -32,4 +32,4 @@ jobs:
         run: |
           # Replace with your Fargate deployment commands
           # Example:
-          aws ecs update-service --cluster nick_python_app_cluster --service nick_python_app_service --force-new-deployment
+          aws ecs update-service --cluster new_py_app_cluster --service new_python_app_service  --force-new-deployment
