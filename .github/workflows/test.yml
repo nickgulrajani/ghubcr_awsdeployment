@@ -4,9 +4,11 @@ on:
   push:
     branches:
       - main
+
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -17,5 +19,4 @@ jobs:
         run: |
           docker build -t ghcr.io/nickgulrajani/ghubcr_awsdeployment:DEV .
           docker login ghcr.io -u nickgulrajani -p $GH_TOKEN
-	  run: docker push ghcr.io/nickgulrajani/ghubcr_awsdeployment:DEV
-
+          docker push ghcr.io/nickgulrajani/ghubcr_awsdeployment:DEV
