@@ -1,47 +1,57 @@
-# app.py
 import numpy as np
 from sklearn.linear_model import LinearRegression
 
-class User:
-    def __init__(self, username, email):
-        self.username = username
-        self.email = email
+# Sample data for sales prediction
+advertising_expenditure = np.array([100, 200, 300, 400, 500]).reshape(-1, 1)  # Independent variable
+sales = np.array([250, 450, 550, 650, 750])  # Dependent variable
 
-    def get_username(self):
-        return self.username
+# Print sample data for sales prediction
+print("Sales Prediction Sample Data:")
+print("------------------------------")
+print("| Advertising Expenditure | Sales  |")
+print("|-------------------------|--------|")
+for expenditure, sale in zip(advertising_expenditure, sales):
+    print(f"|         ${expenditure}         | ${sale}  |")
+print("------------------------------")
+print()
 
-    def get_email(self):
-        return self.email
+# Create and train the linear regression model for sales prediction
+sales_model = LinearRegression()
+sales_model.fit(advertising_expenditure, sales)
 
-    def train_model(self, X, y):
-        model = LinearRegression()
-        model.fit(X, y)
-        return model
+# Sample data for house price estimation
+area = np.array([1000, 1500, 2000, 2500, 3000]).reshape(-1, 1)  # Independent variable
+rooms = np.array([2, 3, 4, 3, 4]).reshape(-1, 1)  # Independent variable
+house_prices = np.array([300000, 450000, 500000, 550000, 600000])  # Dependent variable
 
-    def predict(self, model, X):
-        return model.predict(X)
+# Print sample data for house price estimation
+print("House Price Estimation Sample Data:")
+print("----------------------------------")
+print("|   Area   | Rooms | House Price |")
+print("|----------|-------|-------------|")
+for a, r, price in zip(area, rooms, house_prices):
+    print(f"|  {a} sqft  |   {r}   |  ${price}   |")
+print("----------------------------------")
+print()
 
-def main():
-    # Create a user
-    user = User("JohnDoe", "johndoe@example.com")
+# Create and train the linear regression model for house price estimation
+house_price_model = LinearRegression()
+house_price_model.fit(np.concatenate((area, rooms), axis=1), house_prices)
 
-    # Prepare training data
-    X_train = np.array([[1], [2], [3], [4], [5]])
-    y_train = np.array([2, 4, 6, 8, 10])
+# Make predictions
+advertising_expenditure_new = np.array([[600]])  # New advertising expenditure for sales prediction
+predicted_sales = sales_model.predict(advertising_expenditure_new)
 
-    # Train a machine learning model
-    model = user.train_model(X_train, y_train)
+area_new = np.array([[1800]])  # New area for house price estimation
+rooms_new = np.array([[3]])  # New number of rooms for house price estimation
+predicted_house_price = house_price_model.predict(np.concatenate((area_new, rooms_new), axis=1))
 
-    # Prepare input data for prediction
-    X_test = np.array([[6], [7], [8]])
-
-    # Make predictions using the trained model
-    predictions = user.predict(model, X_test)
-
-    print("Username:", user.get_username())
-    print("Email:", user.get_email())
-    print("Predictions:", predictions)
-
-if __name__ == "__main__":
-    main()
+# Print predictions
+print("Predictions:")
+print("---------------------------")
+print("|      Sales       | Price |")
+print("|------------------|-------|")
+print(f"|   ${predicted_sales[0]}   |  N/A  |")
+print(f"|      N/A       |  ${predicted_house_price[0]}  |")
+print("---------------------------")
 
