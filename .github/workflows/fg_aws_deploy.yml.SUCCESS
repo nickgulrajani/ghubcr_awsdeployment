@@ -36,9 +36,15 @@ jobs:
       - name: Check EKS cluster info
         run: |
           kubectl cluster-info
-          kubectl get deployments
-          kubectl get pods
         shell: /usr/bin/bash -e {0}
+
+      - name: List YAML file
+        run: |
+          ls -l
+
+      - name: Set file permissions
+        run: |
+          chmod +r python-app-deployment.yaml
 
       - name: Deploy to AWS EKS
         run: |
