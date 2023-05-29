@@ -28,9 +28,18 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
-      - name: Deploy to AWS EKS
+      - name: Authenticate with AWS EKS
         run: |
           aws eks update-kubeconfig --name new_python_app --region us-east-1
+        shell: /usr/bin/bash -e {0}
+
+      - name: Check EKS cluster info
+        run: |
+          kubectl cluster-info
+        shell: /usr/bin/bash -e {0}
+
+      - name: Deploy to AWS EKS
+        run: |
           kubectl apply -f python-app-deployment.yaml
         shell: /usr/bin/bash -e {0}
         env:
