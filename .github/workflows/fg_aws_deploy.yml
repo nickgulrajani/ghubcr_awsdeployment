@@ -30,10 +30,14 @@ jobs:
 
       - name: Deploy to AWS EKS
         run: |
-          # Replace with your EKS deployment commands
-          # Example:
-          aws eks update-kubeconfig --name  python_app_deploy --region us-east-1
+          aws eks update-kubeconfig --name python_app_deploy --region us-east-1
           kubectl apply -f python-app-deployment.yaml
+        shell: /usr/bin/bash -e {0}
+        env:
+          AWS_DEFAULT_REGION: us-east-1
+          AWS_REGION: us-east-1
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       - name: Pull Docker image from GitHub Registry
         run: |
@@ -44,3 +48,4 @@ jobs:
           # Replace with your test commands
           # Example:
           docker run ghcr.io/nickgulrajani/ghubcr_awsdeployment:DEV python app.py
+
