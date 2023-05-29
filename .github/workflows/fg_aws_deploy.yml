@@ -30,7 +30,7 @@ jobs:
 
       - name: Deploy to AWS EKS
         run: |
-          aws eks update-kubeconfig --name python_app_deploy --region us-east-1
+          aws eks update-kubeconfig --name new_python_app --region us-east-1
           kubectl apply -f python-app-deployment.yaml
         shell: /usr/bin/bash -e {0}
         env:
