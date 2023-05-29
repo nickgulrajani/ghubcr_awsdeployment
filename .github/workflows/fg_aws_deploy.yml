@@ -28,11 +28,25 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
-      - name: Deploy to AWS Fargate
+      - name: Authenticate with AWS EKS
         run: |
-          # Replace with your Fargate deployment commands
-          # Example:
-          aws ecs update-service --cluster new_py_app_cluster --service service2  --force-new-deployment
+          aws eks update-kubeconfig --name nick-cluster  --region us-east-1
+        shell: /usr/bin/bash -e {0}
+
+      - name: Check EKS cluster info
+        run: |
+          kubectl cluster-info
+        shell: /usr/bin/bash -e {0}
+
+      - name: Deploy to AWS EKS
+        run: |
+          kubectl apply -f python-app-deployment.yaml
+        shell: /usr/bin/bash -e {0}
+        env:
+          AWS_DEFAULT_REGION: us-east-1
+          AWS_REGION: us-east-1
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       - name: Pull Docker image from GitHub Registry
         run: |
