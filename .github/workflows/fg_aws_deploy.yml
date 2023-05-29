@@ -28,11 +28,12 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
-      - name: Deploy to AWS Fargate
+      - name: Deploy to AWS EKS
         run: |
-          # Replace with your Fargate deployment commands
+          # Replace with your EKS deployment commands
           # Example:
-          aws ecs update-service --cluster new_py_app_cluster --service servicea  --force-new-deployment
+          aws eks update-kubeconfig --name  python_app_deploy --region us-east-1
+          kubectl apply -f python-app-deployment.yaml
 
       - name: Pull Docker image from GitHub Registry
         run: |
@@ -43,4 +44,3 @@ jobs:
           # Replace with your test commands
           # Example:
           docker run ghcr.io/nickgulrajani/ghubcr_awsdeployment:DEV python app.py
-

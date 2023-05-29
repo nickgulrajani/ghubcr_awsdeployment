@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build:
+  build-deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -32,4 +32,15 @@ jobs:
         run: |
           # Replace with your Fargate deployment commands
           # Example:
-          aws ecs update-service --cluster new_py_app_cluster --service new_python_app_service  --force-new-deployment
+          aws ecs update-service --cluster new_py_app_cluster --service servicea  --force-new-deployment
+
+      - name: Pull Docker image from GitHub Registry
+        run: |
+          docker pull ghcr.io/nickgulrajani/ghubcr_awsdeployment:DEV
+
+      - name: Run local test
+        run: |
+          # Replace with your test commands
+          # Example:
+          docker run ghcr.io/nickgulrajani/ghubcr_awsdeployment:DEV python app.py
+
