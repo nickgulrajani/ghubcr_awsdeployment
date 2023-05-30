@@ -32,7 +32,7 @@ jobs:
         run: |
           # Replace with your Fargate deployment commands
           # Example:
-          aws ecs update-service --cluster new_py_app_cluster --service serviceb  --force-new-deployment
+          aws ecs update-service --cluster new_py_app_cluster --service servicec  --force-new-deployment
 
       - name: Pull Docker image from GitHub Registry
         run: |
